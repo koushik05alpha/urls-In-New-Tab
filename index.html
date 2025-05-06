@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open 20 URLs in New Tabs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+    }
+    textarea {
+      width: 100%;
+      height: 250px;
+      font-size: 14px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Enter up to 20 URLs (one per line)</h2>
+  <textarea id="urlBox" placeholder="Paste URLs here..."></textarea>
+  <button onclick="openUrls()">Open in New Tabs</button>
+
+  <script>
+    function openUrls() {
+      const rawInput = document.getElementById('urlBox').value;
+      const urls = rawInput
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(url => url.length > 0)
+                    .slice(0, 20);
+
+      if (urls.length === 0) {
+        alert('Please enter at least one URL.');
+        return;
+      }
+
+      urls.forEach(url => {
+        // Validate if it's a proper URL format (optional)
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+          window.open(url, '_blank');
+        } else {
+          console.warn("Invalid URL skipped:", url);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
